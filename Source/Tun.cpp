@@ -65,3 +65,8 @@ int Tun::close()
 	m_fd = -1;
 	return result;
 }
+
+ssize_t Tun::read(std::vector<uint8_t>& buffer) const
+{
+	return ::read(m_fd, buffer.data(), buffer.size());
+}

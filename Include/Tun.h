@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <fmt/core.h>
+#include <vector>
 #include "IPv4Address.h"
 
 class Tun
@@ -29,6 +30,7 @@ public:
 	int open(bool without_packet_info = true);
 	int close();
 	void set_ip(IPv4Address ip);
+	ssize_t read(std::vector<uint8_t>& buffer) const;
 };
 
 #endif //TUN_H
