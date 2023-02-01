@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.25)
+project(tcp-tun LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD 23)
+
+file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp)
+file(GLOB INCLUDE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Include/*.h)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Include)
+find_package(fmt)
+add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES})
+target_link_libraries(${PROJECT_NAME} fmt::fmt)
