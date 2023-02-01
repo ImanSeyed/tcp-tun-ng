@@ -36,7 +36,7 @@ constexpr T convert_between_host_and_big_endian(T value)
 }
 
 template<typename T>
-class BigEndian
+class __attribute__((packed)) BigEndian
 {
 private:
 	T m_value{};
@@ -54,7 +54,7 @@ public:
 };
 
 template<typename T>
-class LittleEndian
+class __attribute__((packed)) LittleEndian
 {
 private:
 	T m_value{};

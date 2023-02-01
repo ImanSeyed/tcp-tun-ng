@@ -6,7 +6,7 @@
 #include <fmt/core.h>
 #include "Endian.h"
 
-class IPv4Address
+class __attribute__((packed)) IPv4Address
 {
 private:
 	uint32_t m_data{};
