@@ -29,7 +29,7 @@ public:
 
 	int open(bool without_packet_info = true);
 	int close();
-	void set_ip(IPv4Address ip);
+	void set_ip(IPv4Address ip, IPv4Address subnet);
 	ssize_t read(std::vector<uint8_t>& buffer) const;
 };
 

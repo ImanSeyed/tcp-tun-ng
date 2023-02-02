@@ -7,7 +7,8 @@
 #include "TCPState.h"
 #include "TCPHeader.h"
 
-struct Quad {
+struct Quad
+{
 	std::pair<IPv4Address, uint16_t> source;
 	std::pair<IPv4Address, uint16_t> destination;
 };
@@ -19,7 +20,7 @@ int main()
 	Tun nic = Tun();
 	nic.open();
 
-	nic.set_ip(IPv4Address(192, 168, 20, 1));
+	nic.set_ip(IPv4Address(192, 168, 20, 1), IPv4Address(255, 255, 255, 0));
 
 	for (;;)
 	{

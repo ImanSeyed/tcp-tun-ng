@@ -22,9 +22,9 @@ int Tun::open(bool without_packet_info)
 	return m_fd;
 }
 
-void Tun::set_ip(IPv4Address ip)
+void Tun::set_ip(IPv4Address ip, IPv4Address subnet)
 {
-	assert(m_fd != -1 && !ip.is_zero());
+	assert(m_fd != -1 && !ip.is_zero() && !subnet.is_zero());
 
 	int sockfd{ -1 };
 	struct sockaddr_in* addr = (struct sockaddr_in*)&ifr.ifr_addr;
@@ -44,7 +44,7 @@ void Tun::set_ip(IPv4Address ip)
 		return;
 	}
 
-	inet_pton(AF_INET, "255.255.255.0", &addr->sin_addr);
+	inet_pton(AF_INET, subnet.to_string().c_str(), &addr->sin_addr);
 	if (ioctl(sockfd, SIOCSIFNETMASK, &ifr) == -1)
 	{
 		perror("ioctl SIOCSIFNETMASK");
