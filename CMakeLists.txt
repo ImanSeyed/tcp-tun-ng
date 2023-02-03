@@ -18,7 +18,7 @@ target_include_directories(${PROJECT_NAME}-core
 file(GLOB SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp)
 file(GLOB INCLUDE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/Include/*.h)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Include)
-find_package(fmt)
+find_package(fmt REQUIRED)
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${INCLUDE_FILES})
 target_link_libraries(${PROJECT_NAME} fmt::fmt)
 add_subdirectory(Test)
