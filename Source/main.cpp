@@ -1,22 +1,18 @@
 #include <vector>
 #include <cstdint>
-#include <map>
+#include <unordered_map>
 #include <utility>
 #include "Tun.h"
+#include "Quad.h"
 #include "IPv4Header.h"
 #include "TCPState.h"
 #include "TCPHeader.h"
 
-struct Quad
-{
-	std::pair<IPv4Address, uint16_t> source;
-	std::pair<IPv4Address, uint16_t> destination;
-};
 
 int main()
 {
 	std::vector<uint8_t> buffer(1500);
-	std::map<Quad, TCPState> connections;
+	std::unordered_map<Quad, TCPState> connections;
 	Tun nic = Tun();
 	nic.open();
 
@@ -37,5 +33,10 @@ int main()
 			continue;
 
 		const auto& tcp_packet = *static_cast<TCPHeader const*>(ipv4_packet.payload());
+		const auto quad = Quad({ ipv4_packet.source(), tcp_packet.source_port() },
+			{ ipv4_packet.destination(), tcp_packet.destination_port() });
+
+		if (connections.find(quad) == connections.end())
+			connections.emplace(std::make_pair(quad, TCPState()));
 	}
 }
