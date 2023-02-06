@@ -76,7 +76,7 @@ void Tun::fill_in_ipv4_header(IPv4Header& iph,
 	const IPv4Address& destination_ipv4,
 	size_t payload_size,
 	uint8_t type_of_service,
-	uint8_t ttl)
+	uint8_t ttl) const
 {
 	size_t ipv4_header_size = sizeof(IPv4Header) + payload_size;
 	assert(ipv4_header_size <= 1500);
@@ -88,7 +88,7 @@ void Tun::fill_in_ipv4_header(IPv4Header& iph,
 	iph.set_destination(destination_ipv4);
 	iph.set_protocol(0x06);
 	iph.set_length(ipv4_header_size);
-	iph.set_ident(1);
+	iph.set_ident(0);
 	iph.set_ttl(ttl);
 	iph.set_checksum(iph.compute_checksum());
 }

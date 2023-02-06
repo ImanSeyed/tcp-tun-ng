@@ -36,7 +36,7 @@ public:
 		const IPv4Address& destination_ipv4,
 		size_t payload_size,
 		uint8_t type_of_service,
-		uint8_t ttl);
+		uint8_t ttl) const;
 	ssize_t read(std::vector<uint8_t>& buffer) const;
 	ssize_t write(std::vector<uint8_t>& buffer) const;
 };
