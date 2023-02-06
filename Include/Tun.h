@@ -11,6 +11,7 @@
 #include <fmt/core.h>
 #include <vector>
 #include "IPv4Address.h"
+#include "IPv4Header.h"
 
 class Tun
 {
@@ -30,7 +31,14 @@ public:
 	int open(bool without_packet_info = true);
 	int close();
 	void set_ip(IPv4Address ip, IPv4Address subnet);
+	void fill_in_ipv4_header(IPv4Header& iph,
+		const IPv4Address& source_ipv4,
+		const IPv4Address& destination_ipv4,
+		size_t payload_size,
+		uint8_t type_of_service,
+		uint8_t ttl);
 	ssize_t read(std::vector<uint8_t>& buffer) const;
+	ssize_t write(std::vector<uint8_t>& buffer) const;
 };
 
 #endif //TUN_H

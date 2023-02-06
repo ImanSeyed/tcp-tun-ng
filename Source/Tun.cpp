@@ -70,3 +70,30 @@ ssize_t Tun::read(std::vector<uint8_t>& buffer) const
 {
 	return ::read(m_fd, buffer.data(), buffer.size());
 }
+
+void Tun::fill_in_ipv4_header(IPv4Header& iph,
+	const IPv4Address& source_ipv4,
+	const IPv4Address& destination_ipv4,
+	size_t payload_size,
+	uint8_t type_of_service,
+	uint8_t ttl)
+{
+	size_t ipv4_header_size = sizeof(IPv4Header) + payload_size;
+	assert(ipv4_header_size <= 1500);
+
+	iph.set_version(4);
+	iph.set_internet_header_length(5);
+	iph.set_dscp_and_ecn(type_of_service);
+	iph.set_source(source_ipv4);
+	iph.set_destination(destination_ipv4);
+	iph.set_protocol(0x06);
+	iph.set_length(ipv4_header_size);
+	iph.set_ident(1);
+	iph.set_ttl(ttl);
+	iph.set_checksum(iph.compute_checksum());
+}
+
+ssize_t Tun::write(std::vector<uint8_t>& buffer) const
+{
+	return ::write(m_fd, buffer.data(), buffer.size());
+}
