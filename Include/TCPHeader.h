@@ -16,6 +16,10 @@ private:
 	BigEndian<uint16_t> m_checksum;
 	BigEndian<uint16_t> m_urgent;
 
+public:
+	TCPHeader() = default;
+	~TCPHeader() = default;
+
 	struct Flag
 	{
 		enum : uint16_t
@@ -28,11 +32,6 @@ private:
 			URG = 0x20
 		};
 	};
-
-
-public:
-	TCPHeader() = default;
-	~TCPHeader() = default;
 
 	std::size_t header_size() const
 	{
