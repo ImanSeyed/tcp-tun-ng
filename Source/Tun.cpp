@@ -90,7 +90,7 @@ void Tun::fill_in_ipv4_header(IPv4Header& iph,
 	iph.set_length(ipv4_header_size);
 	iph.set_ident(0);
 	iph.set_ttl(ttl);
-	iph.set_checksum(iph.compute_checksum());
+	iph.set_checksum(__builtin_bswap16(iph.compute_checksum()));
 }
 
 ssize_t Tun::write(std::vector<uint8_t>& buffer) const
