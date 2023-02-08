@@ -36,11 +36,7 @@ int main()
 		const auto quad = Quad({ ipv4_packet.source(), tcp_packet.source_port() },
 			{ ipv4_packet.destination(), tcp_packet.destination_port() });
 
-		auto connection = connections.find(quad);
-		if (connection == connections.end())
-			connections.emplace(std::make_pair(quad, TCPState()));
-		else
-			connection->second
-				.on_packet(ipv4_packet, tcp_packet);
+		auto& tcp_state = connections.emplace(std::make_pair(quad, TCPState())).first->second;
+		tcp_state.on_packet(ipv4_packet, tcp_packet, nic);
 	}
 }
